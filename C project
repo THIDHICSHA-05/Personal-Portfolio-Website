@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int length, i;
+    char includeUpper, includeLower, includeDigits, includeSymbols;
+    char charset[100] = "";
+    
+    printf("Welcome to C Password Generator!\n");
+    
+    // User inputs
+    printf("Enter password length: ");
+    scanf("%d", &length);
+    
+    printf("Include uppercase letters? (y/n): ");
+    scanf(" %c", &includeUpper);
+    
+    printf("Include lowercase letters? (y/n): ");
+    scanf(" %c", &includeLower);
+    
+    printf("Include digits? (y/n): ");
+    scanf(" %c", &includeDigits);
+    
+    printf("Include symbols? (y/n): ");
+    scanf(" %c", &includeSymbols);
+    
+    // Build character set
+    if (includeUpper == 'y' || includeUpper == 'Y') {
+        strcat(charset, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    }
+    if (includeLower == 'y' || includeLower == 'Y') {
+        strcat(charset, "abcdefghijklmnopqrstuvwxyz");
+    }
+    if (includeDigits == 'y' || includeDigits == 'Y') {
+        strcat(charset, "0123456789");
+    }
+    if (includeSymbols == 'y' || includeSymbols == 'Y') {
+        strcat(charset, "!@#$%^&*()_+-=<>?");
+    }
+    
+    // Check if charset is empty
+    if (charset[0] == '\0') {
+        printf("Error: No characters selected.\n");
+        return 1;
+    }
+    
+    // Seed random number generator
+    srand(time(0));
+    
+    printf("\nGenerated Password: ");
+    for (i = 0; i < length; i++) {
+        int index = rand() % strlen(charset);
+        printf("%c", charset[index]);
+    }
+    printf("\n");
+    
+    return 0;
+}
